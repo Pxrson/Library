@@ -1,0 +1,29 @@
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+            
+local function _D(data)
+                local s=''
+                data=data:gsub('[^'..b..'=]', '')
+                for i=1, #data, 4 do
+                    local n=0
+                    for j=0, 3 do
+                        local c=data:byte(i+j)
+                        if c then
+                            local x=b:find(string.char(c), 1, true)
+                            if x then
+                                n=n*64+x-1
+                            else
+                                return nil -- invalid character
+                            end
+                        else
+                            n=n*64
+                        end
+                    end
+                    local t
+                    t=string.char(n/65536%256,n/256%256,n%256)
+                    local pad=data:sub(i+2,i+3):match('(=*)')
+                    if pad=='==' then t=t:sub(1,1) end
+                    if pad=='=' then t=t:sub(1,2) end
+                    s=s..t
+                end
+                return s
+            endlocal _=0 local _A=0 local _B=0 print(_D("aGVsbG8="))
