@@ -2237,6 +2237,26 @@ end
 						return ha_data, ha
 					end
 
+tab_data.AddSeparator = function()
+    local Container = Instance.new("Frame")
+    Container.Name = "SeparatorContainer"
+    Container.BackgroundTransparency = 1
+    Container.Size = UDim2.new(1, 0, 0, 10)
+
+    local Separator = Instance.new("Frame")
+    Separator.Name = "SeparatorLine"
+    Separator.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    Separator.BackgroundTransparency = 0
+    Separator.BorderSizePixel = 0
+    Separator.Size = UDim2.new(0.95, 0, 0, 2)
+    Separator.Parent = Container
+
+    Separator.AnchorPoint = Vector2.new(0.5, 0.5)
+    Separator.Position = UDim2.new(0.5, 0, 0.5, 0)
+    
+    return Container
+end
+
 					function tab_data:AddFolder(folder_name) 
 						local folder_data = {}
 
@@ -2332,4 +2352,18 @@ end
 	return window_data, Window
 
 end
+
+local MyWindow = library:AddWindow("My Interface")
+local SettingsTab = MyWindow:AddTab("Settings")
+
+-- Add a section of controls
+SettingsTab:AddSwitch("Toggle Feature 1", ...)
+SettingsTab:AddSlider("Value Setting", ...)
+
+-- Use the new separator to create a visual break
+SettingsTab:AddSeparator()
+
+-- Start a new section of controls
+SettingsTab:AddTextBox("Input Name", ...)
+SettingsTab:AddButton("Confirm", ...)
 return library
